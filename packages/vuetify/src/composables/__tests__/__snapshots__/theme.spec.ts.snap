@@ -7,25 +7,23 @@ exports[`createTheme should create style element 1`] = `
     type="text/css"
   >
     .v-theme--light {
-      --v-theme-background: 255,255,255;
-      --v-theme-border: 224,224,224;
-      --v-theme-surface: 255,255,255;
+      --v-theme-background: 229,229,229;
+      --v-theme-surface: 170,170,170;
       --v-theme-primary: 98,0,238;
       --v-theme-primary-darken-1: 55,0,179;
       --v-theme-secondary: 3,218,198;
       --v-theme-secondary-darken-1: 1,135,134;
-      --v-theme-error: 176,0,32;
+      --v-theme-error: 255,82,82;
       --v-theme-info: 33,150,243;
       --v-theme-success: 76,175,80;
       --v-theme-warning: 251,140,0;
       --v-theme-on-background: 0,0,0;
-      --v-theme-on-border: 0,0,0;
       --v-theme-on-surface: 0,0,0;
       --v-theme-on-primary: 255,255,255;
       --v-theme-on-primary-darken-1: 255,255,255;
       --v-theme-on-secondary: 0,0,0;
       --v-theme-on-secondary-darken-1: 0,0,0;
-      --v-theme-on-error: 255,255,255;
+      --v-theme-on-error: 0,0,0;
       --v-theme-on-info: 0,0,0;
       --v-theme-on-success: 0,0,0;
       --v-theme-on-warning: 0,0,0;
@@ -35,22 +33,22 @@ exports[`createTheme should create style element 1`] = `
       color: rgb(var(--v-theme-on-background));
     }
     .v-theme--dark {
-      --v-theme-background: 18,18,18;
-      --v-theme-border: 224,224,224;
-      --v-theme-surface: 18,18,18;
+      --v-theme-background: 41,41,41;
+      --v-theme-surface: 51,51,51;
       --v-theme-primary: 187,134,252;
       --v-theme-primary-darken-1: 55,0,179;
-      --v-theme-secondary: 3,218,198;
-      --v-theme-error: 207,102,121;
+      --v-theme-secondary: 3,218,197;
+      --v-theme-secondary-darken-1: 3,218,197;
+      --v-theme-error: 255,82,82;
       --v-theme-info: 33,150,243;
       --v-theme-success: 76,175,80;
       --v-theme-warning: 251,140,0;
       --v-theme-on-background: 255,255,255;
-      --v-theme-on-border: 0,0,0;
       --v-theme-on-surface: 255,255,255;
       --v-theme-on-primary: 0,0,0;
       --v-theme-on-primary-darken-1: 255,255,255;
       --v-theme-on-secondary: 0,0,0;
+      --v-theme-on-secondary-darken-1: 0,0,0;
       --v-theme-on-error: 0,0,0;
       --v-theme-on-info: 0,0,0;
       --v-theme-on-success: 0,0,0;
@@ -69,16 +67,6 @@ exports[`createTheme should create style element 1`] = `
     }
     .border-background {
       border-color: rgb(var(--v-theme-background));
-    }
-    .bg-border {
-      background: rgb(var(--v-theme-border));
-      color: rgb(var(--v-theme-on-border));
-    }
-    .text-border {
-      color: rgb(var(--v-theme-border));
-    }
-    .border-border {
-      border-color: rgb(var(--v-theme-border));
     }
     .bg-surface {
       background: rgb(var(--v-theme-surface));
@@ -172,9 +160,6 @@ exports[`createTheme should create style element 1`] = `
     }
     .on-background {
       color: rgb(var(--v-theme-on-background));
-    }
-    .on-border {
-      color: rgb(var(--v-theme-on-border));
     }
     .on-surface {
       color: rgb(var(--v-theme-on-surface));
