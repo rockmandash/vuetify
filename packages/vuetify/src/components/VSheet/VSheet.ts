@@ -2,12 +2,11 @@
 import './VSheet.sass'
 
 // Utilities
-import { computed, defineComponent, h } from 'vue'
+import { computed, defineComponent, h, mergeProps } from 'vue'
 import { convertToUnit } from '@/util/helpers'
 import makeProps from '@/util/makeProps'// Utilities
 import propsFactory from '@/util/propsFactory'
 
-// Composables
 import {
   makeBorderRadiusProps,
   makeDimensionProps,
@@ -19,6 +18,17 @@ import {
   useTheme,
 } from '@/composables'
 
+// Types
+export interface PositionProps {
+  absolute?: boolean
+  bottom?: boolean | string
+  fixed?: boolean
+  left?: boolean | string
+  right?: boolean | string
+  top?: boolean | string
+}
+
+// Composables
 const makePositionProps = propsFactory({
   absolute: Boolean,
   bottom: [Boolean, String],
@@ -28,22 +38,21 @@ const makePositionProps = propsFactory({
   top: [Boolean, String],
 })
 
-function usePosition (props: any) {
+function usePosition (props: PositionProps) {
   const positionStyles = computed(() => {
-    const styles: any = {}
-    const top = (props.top == null || props.top === true) ? '0' : props.top
-    const right = (props.right == null || props.right === true) ? '0' : props.right
-    const bottom = (props.bottom == null || props.bottom === true) ? '0' : props.bottom
-    const left = (props.left == null || props.left === true) ? '0' : props.left
-    const position = props.fixed ? 'fixed' : props.absolute ? 'absolute' : ''
+    const targets = ['top', 'right', 'bottom', 'left'] as const
+    const styles: Partial<Record<typeof targets[number] | 'position', string>> = {}
+    const pos = props.fixed ? 'fixed' : props.absolute ? 'absolute' : undefined
 
-    console.log(top)
+    if (pos) styles.position = pos
 
-    if (top) styles.top = convertToUnit(top)
-    if (right) styles.right = convertToUnit(right)
-    if (bottom) styles.bottom = convertToUnit(bottom)
-    if (left) styles.left = convertToUnit(left)
-    if (position) styles.position = position
+    for (const target of targets) {
+      const prop = props[target]
+
+      if (prop == null || prop === false) continue
+
+      styles[target] = convertToUnit(prop === true ? '0' : String(prop)) ?? '0'
+    }
 
     return styles
   })
@@ -51,28 +60,9 @@ function usePosition (props: any) {
   return { positionStyles }
 }
 
-// Composables
 const makeOutlineProps = propsFactory({
   outlined: [Boolean, String],
 })
-
-function useOutline (props: any) {
-  const outlined = props.outlined
-
-  const outlineStyles = computed(() => {
-    if (!outlined) return []
-
-    const color = outlined === true ? 'border' : outlined
-
-    return [
-      'border-width: thin',
-      'border-style: solid',
-      `border-color: rgb(var(--v-theme-${color}))`,
-    ]
-  })
-
-  return { outlineStyles }
-}
 
 export default defineComponent({
   name: 'VSheet',
@@ -91,25 +81,21 @@ export default defineComponent({
     const { elevationClasses } = useElevation(props)
     const { themeClasses } = useTheme()
     const { dimensionStyles } = useDimension(props)
-    const { outlineStyles } = useOutline(props)
     const { positionStyles } = usePosition(props)
-    const classes = ['v-sheet']
 
     return () => (
-      h(props.tag, {
-        ...attrs,
+      h(props.tag, mergeProps(attrs, {
         class: [
-          ...classes,
+          'v-sheet',
           themeClasses.value,
           borderRadiusClasses.value,
           elevationClasses.value,
         ],
         style: [
           dimensionStyles.value,
-          outlineStyles.value,
           positionStyles.value,
         ],
-      }, slots)
+      }), slots)
     )
   },
 })
