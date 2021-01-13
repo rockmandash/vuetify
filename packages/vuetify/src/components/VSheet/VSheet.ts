@@ -2,7 +2,7 @@
 import './VSheet.sass'
 
 // Utilities
-import { computed, defineComponent, h, mergeProps } from 'vue'
+import { computed, defineComponent, h } from 'vue'
 import { convertToUnit } from '@/util/helpers'
 import makeProps from '@/util/makeProps'// Utilities
 import propsFactory from '@/util/propsFactory'
@@ -76,7 +76,7 @@ export default defineComponent({
     ...makeTagProps(),
   }),
 
-  setup (props, { attrs, slots }) {
+  setup (props, { slots }) {
     const { borderRadiusClasses } = useBorderRadius(props)
     const { elevationClasses } = useElevation(props)
     const { themeClasses } = useTheme()
@@ -84,7 +84,7 @@ export default defineComponent({
     const { positionStyles } = usePosition(props)
 
     return () => (
-      h(props.tag, mergeProps(attrs, {
+      h(props.tag, {
         class: [
           'v-sheet',
           themeClasses.value,
@@ -95,7 +95,7 @@ export default defineComponent({
           dimensionStyles.value,
           positionStyles.value,
         ],
-      }), slots)
+      }, slots)
     )
   },
 })
