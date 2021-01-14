@@ -1,3 +1,6 @@
+// Styles
+import './VSheet.sass'
+
 // Utilities
 import { defineComponent, h } from 'vue'
 import makeProps from '@/util/makeProps'
@@ -34,7 +37,7 @@ export default defineComponent({
     const { themeClasses } = useTheme()
     const { borderRadiusClasses } = useBorderRadius(props)
     const { elevationClasses } = useElevation(props)
-    const { outlinedClasses } = useOutlined(props)
+    const { outlinedClasses } = useOutlined(props, 'v-sheet')
     const { positionClasses, positionStyles } = usePosition(props)
     const { dimensionStyles } = useDimension(props)
 

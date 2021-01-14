@@ -1,1 +1,10 @@
 @import '../../styles/styles.sass';
+
+$sheet: () !default;
+$sheet: map-deep-merge(
+  (
+    'border-style': solid,
+    'border-width': thin
+  ),
+  $sheet
+);

@@ -12,14 +12,13 @@ export const makeOutlinedProps = propsFactory({
   outlined: [Boolean, String],
 })
 
-export function useOutlined (props: OutlinedProps) {
+export function useOutlined (props: OutlinedProps, target: string) {
   const outlinedClasses = computed(() => {
     const classes: Dictionary<boolean> = {}
 
     if (!props.outlined) return classes
 
-    classes.border = true
-    classes['border-solid'] = true
+    classes[`${target}--outlined`] = true
 
     if (typeof props.outlined === 'string') {
       classes[`border-${props.outlined}`] = true
