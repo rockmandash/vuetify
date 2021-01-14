@@ -1,6 +1,3 @@
-// Styles
-import './VSheet.sass'
-
 // Utilities
 import { computed, defineComponent, h } from 'vue'
 import { convertToUnit } from '@/util/helpers'
@@ -20,31 +17,31 @@ import {
 
 // Types
 export interface PositionProps {
-  absolute?: boolean
   bottom?: boolean | string
-  fixed?: boolean
   left?: boolean | string
+  position?: string
   right?: boolean | string
   top?: boolean | string
 }
 
 // Composables
 const makePositionProps = propsFactory({
-  absolute: Boolean,
   bottom: [Boolean, String],
-  fixed: Boolean,
   left: [Boolean, String],
+  position: String,
   right: [Boolean, String],
   top: [Boolean, String],
 })
 
 function usePosition (props: PositionProps) {
-  const positionStyles = computed(() => {
-    const targets = ['top', 'right', 'bottom', 'left'] as const
-    const styles: Partial<Record<typeof targets[number] | 'position', string>> = {}
-    const pos = props.fixed ? 'fixed' : props.absolute ? 'absolute' : undefined
+  const targets = ['top', 'right', 'bottom', 'left'] as const
 
-    if (pos) styles.position = pos
+  const positionClasses = computed(() => {
+    return props.position ? { [`position-${props.position}`]: true } : {}
+  })
+
+  const positionStyles = computed(() => {
+    const styles: Partial<Record<typeof targets[number], string>> = {}
 
     for (const target of targets) {
       const prop = props[target]
@@ -57,7 +54,7 @@ function usePosition (props: PositionProps) {
     return styles
   })
 
-  return { positionStyles }
+  return { positionClasses, positionStyles }
 }
 
 const makeOutlineProps = propsFactory({
@@ -77,11 +74,11 @@ export default defineComponent({
   }),
 
   setup (props, { slots }) {
+    const { themeClasses } = useTheme()
     const { borderRadiusClasses } = useBorderRadius(props)
     const { elevationClasses } = useElevation(props)
-    const { themeClasses } = useTheme()
+    const { positionClasses, positionStyles } = usePosition(props)
     const { dimensionStyles } = useDimension(props)
-    const { positionStyles } = usePosition(props)
 
     return () => (
       h(props.tag, {
@@ -90,6 +87,7 @@ export default defineComponent({
           themeClasses.value,
           borderRadiusClasses.value,
           elevationClasses.value,
+          positionClasses.value,
         ],
         style: [
           dimensionStyles.value,
