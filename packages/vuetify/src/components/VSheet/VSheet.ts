@@ -4,7 +4,7 @@ import './VSheet.sass'
 // Utilities
 import { computed, defineComponent, h } from 'vue'
 import { convertToUnit } from '@/util/helpers'
-import makeProps from '@/util/makeProps'// Utilities
+import makeProps from '@/util/makeProps'
 import propsFactory from '@/util/propsFactory'
 
 import {
